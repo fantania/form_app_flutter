@@ -93,28 +93,32 @@ class _MyFormState extends State<MyForm> {
               fieldMethod(
                   'firstname',
                   'First name',
-                  fieldController: firstName,
-                  'Please enter your First Name'),
+
+                  'Please enter your First Name',
+                firstName,),
               const SizedBox(height: 10),
               fieldMethod(
                   'lastname',
                   'Last name',
-                  fieldController: lastName,
-                  'Please enter your Last Name'),
+                  'Please enter your Last Name',
+                lastName),
               const SizedBox(height: 10),
               fieldMethod(
                   'phonenumber',
                   'Phone number',
-                  fieldController: phoneNumber,
                   'Please enter your Phone Number',
-                  numValidation: 'Please enter a valid Phone Number'),
+                  phoneNumber,
+                  ),
               const SizedBox(height: 10),
               fieldMethod(
                   'email',
                   'Email',
-                  fieldController: email,
+                  // fieldController: email,
                   'Please enter your Email',
-                  errorEmail: 'Please enter a valid email'),
+                  email
+                  // errorEmail: 'Please enter a valid email'
+                  
+                  ),
               const SizedBox(height: 10),
               FormBuilderCheckboxGroup(name: "service", options: [
                 optionField('roof', 'ROOFTOP'),
@@ -166,33 +170,33 @@ class _MyFormState extends State<MyForm> {
           isActive: currentStep >= 2,
           content: Column(
             children: [
-              fieldMethod(
-                  'cardNumber',
-                  'Card Number',
-                  fieldController: cardNumber,
-                  'Please enter the Card Number',
-                  creditCard: 'Please enter a valid Card Number'),
+              // fieldMethod(
+              //     'cardNumber',
+              //     'Card Number',
+              //     fieldController: cardNumber,
+              //     'Please enter the Card Number',
+              //     creditCard: 'Please enter a valid Card Number'),
               const SizedBox(height: 10),
-              fieldMethod(
-                  'cardHolder',
-                  'Card Holder',
-                  fieldController: cardHolder,
-                  'Please enter the Card Holder'),
+              // fieldMethod(
+              //     'cardHolder',
+              //     'Card Holder',
+              //     fieldController: cardHolder,
+              //     'Please enter the Card Holder'),
               const SizedBox(height: 10),
-              fieldMethod(
-                'expDate',
-                'Expiration Date',
-                fieldController: expDate,
-                'Please enter the Expiration Date',
-                //numValidation: 'Please enter a valid Phone Number'
-              ),
+              // fieldMethod(
+              //   'expDate',
+              //   'Expiration Date',
+              //   fieldController: expDate,
+              //   'Please enter the Expiration Date',
+              //   //numValidation: 'Please enter a valid Phone Number'
+              // ),
               const SizedBox(height: 10),
-              fieldMethod(
-                  'ccv',
-                  'ccv',
-                  fieldController: ccv,
-                  'Please enter your CCV',
-                  numValidation: 'Please enter a valid CCV'),
+              // fieldMethod(
+              //     'ccv',
+              //     'ccv',
+              //     fieldController: ccv,
+              //     'Please enter your CCV',
+              //     numValidation: 'Please enter a valid CCV'),
             ],
           ),
         ),
@@ -388,37 +392,69 @@ class _MyFormState extends State<MyForm> {
           ),
         ),
       ];
-}
 
-FormBuilderTextField fieldMethod(nameField, hint, error1,
-    {fieldController, errorEmail, numValidation, creditCard}) {
-  return FormBuilderTextField(
-    name: nameField,
-    controller: fieldController,
-    decoration: InputDecoration(
-      hintText: hint,
-      hintStyle: TextStyle(color: Colors.grey[600]),
-      border: const OutlineInputBorder(
-        borderRadius: BorderRadius.all(
-          Radius.circular(10),
+
+
+
+
+
+
+
+
+  FormBuilderTextField fieldMethod(nameField, hint, error1,fieldController
+      //{fieldController
+      //  , errorEmail, numValidation, creditCard}
+      ) {
+
+    String NumberError = "Please Enter A Valid Number";
+
+    return FormBuilderTextField(
+      name: nameField,
+      controller: fieldController,
+      decoration: InputDecoration(
+        hintText: hint,
+        hintStyle: TextStyle(color: Colors.grey[600]),
+        border: const OutlineInputBorder(
+          borderRadius: BorderRadius.all(
+            Radius.circular(10),
+          ),
         ),
       ),
-    ),
-    validator: FormBuilderValidators.compose([
-      FormBuilderValidators.required(errorText: error1),
-      if (errorEmail != null)
-        FormBuilderValidators.email(errorText: errorEmail),
-      if (creditCard != null)
-        FormBuilderValidators.creditCard(errorText: creditCard),
-      if (numValidation != null)
-        FormBuilderValidators.integer(errorText: numValidation),
-    ]),
-  );
+      validator: FormBuilderValidators.compose([
+        FormBuilderValidators.required(errorText: error1),
+       if(nameField=="phonenumber")
+
+         FormBuilderValidators.integer(errorText: NumberError),
+       if(nameField=="email")
+         FormBuilderValidators.email(errorText: "not valid email")
+
+
+
+        // if (creditCard != null)
+        // FormBuilderValidators.creditCard(errorText: creditCard),
+
+      ]),
+    );
+  }
+
+  FormBuilderFieldOption optionField(fieldValue, fieldChild) {
+    return FormBuilderFieldOption(
+      value: fieldValue,
+      child: Text(fieldChild.toString()),
+    );
+  }
+
+
+
+
+
+
+
+
+
+
+
 }
 
-FormBuilderFieldOption optionField(fieldValue, fieldChild) {
-  return FormBuilderFieldOption(
-    value: fieldValue,
-    child: Text(fieldChild.toString()),
-  );
-}
+
+
